@@ -8,7 +8,7 @@ public enum WeaponType {
     ranged
 }
 
-public class Weapon : ScriptableObject
+public class Weapon : Consumable
 {
     [Header("Information")]
 

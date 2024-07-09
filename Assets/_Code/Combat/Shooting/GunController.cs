@@ -14,50 +14,24 @@ public class GunController : MonoBehaviour
 
     [Header("Weapons")]
 
-    public Weapon pistol;
+    public Weapon primary;
+    public Weapon secondary;
+    public Weapon tertiary;
 
 
     [Header("Inventory")]
-    // ! You should only be able to hold 5 weapons!
-    public  Weapon[] weapons = new Weapon[5];
+    // ! You should only be able to hold 3 weapons!
+    public  Weapon[] weapons = new Weapon[3];
 
-    void AddPistol(){
-        ResetWeapons();
-        weapons[0] = pistol;
-        currentWeapon = weapons[0];
-
-        if(currentWeapon == null || weapons[0] == null){
-            Debug.LogWarning("Either your current weapon or the pistol is null!");
-        }
-    }
-
-    void ResetWeapons(){
-
-        weapons = new Weapon[5];
-        //! Makes sure that the Array can have items removed 
-        if(weapons.Length > 0){
-            for(int i = 0; i < weapons.Length; i++){
-                weapons[i] = null;
-            }
-        }        
-    }
-
-    void Attack(){
-        bool isGun = currentWeapon.weapType == weaponType.gun;
-        
-        if(isGun){
-            //! Insert gun logic here
-        }
-
-        else{
-            //? Insert Melee logic here
-        }
+    
+    void AddWeapon(int index, Weapon weapon)
+    {
+        weapons[index] = weapon;
     }
 
     void Start()
     {
-        ResetWeapons();
-        AddPistol();
+        
     }
     
 }
