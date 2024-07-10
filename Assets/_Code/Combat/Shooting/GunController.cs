@@ -46,10 +46,10 @@ public class GunController : MonoBehaviour
         // Will add laters
         yield return null;
     }
-
+    
     IEnumerator RayAttack(RaycastWeapon rayW){
 
-        
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0,0,0));
 
         yield return null;
     }
