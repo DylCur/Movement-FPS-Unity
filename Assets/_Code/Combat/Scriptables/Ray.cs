@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Raycast", menuName = "Weapons/Raycast", order = 2)]
-public class Raycast : Gun
+public class RaycastWeapon : Gun
 {
     
     public float range;

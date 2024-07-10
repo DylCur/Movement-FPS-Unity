@@ -47,9 +47,18 @@ public class GunController : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator RayAttack(RaycastWeapon rayW){
+
+        
+
+        yield return null;
+    }
+
     void GunAttack(Gun gun)
     {
-        if()
+        if(gun is RaycastWeapon ray){
+            StartCoroutine(RayAttack(ray));
+        }
     }
 
     IEnumerator UseHeal(HealingItem healing)
@@ -189,7 +198,7 @@ public class GunController : MonoBehaviour
 
                 else if (weapon is Gun gun)
                 {
-                    StartCoroutine(GunAttack(gun));
+                    GunAttack(gun);
                 }
             }
             else
@@ -203,11 +212,7 @@ public class GunController : MonoBehaviour
                 {
                     StartCoroutine(UseFood(food));
                 }
-            }
-            void Start()
-            {
-
-            }
+            }           
         }
     
 }

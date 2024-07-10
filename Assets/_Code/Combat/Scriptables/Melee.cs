@@ -12,7 +12,6 @@ public class Melee : Weapon
     public float range;
     public float arcRange;
 
-    
     void Awake() {
         weaponName = "Default Melee";    
         description = "Default Melee Description";
@@ -21,5 +20,4 @@ public class Melee : Weapon
         arcRange = 30;
     }
 
-    
 }
