@@ -47,9 +47,9 @@ public class GunController : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator GunAttack(Gun gun)
+    void GunAttack(Gun gun)
     {
-        yield return null;
+        if()
     }
 
     IEnumerator UseHeal(HealingItem healing)
