@@ -43,17 +43,48 @@ public class GunController : MonoBehaviour
 
     IEnumerator MeleeAttack(Melee melee)
     {
-
+        // Will add laters
+        yield return null;
     }
 
     IEnumerator GunAttack(Gun gun)
     {
-
+        yield return null;
     }
 
     IEnumerator UseHeal(HealingItem healing)
     {
+        if(healing.healingTime == 0)
+        {
+            if(health + healing.healing > 100)
+            {
+                health = 100;
+            }
 
+            else
+            {
+                health += healing.healing;
+            }
+        }
+
+        else
+        {
+            for (int i = 0; i < Mathf.CeilToInt(healing.healingTime); i++)
+            {
+                if (health + healing.healing / healing.healingTime > 100)
+                {           
+                    health = 100;
+                }
+
+                else
+                {
+                    health += Mathf.CeilToInt(healing.healing / healing.healingTime);
+                }
+
+                // This is a constant (Should be changed but idc)
+                yield return new WaitForSeconds(1);
+            }
+        }
     }
 
     IEnumerator UseFood(Food food)

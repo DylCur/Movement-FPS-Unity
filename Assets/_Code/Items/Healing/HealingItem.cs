@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealingItem : Consumable
 {
     [Range(1, 100)]
-    [SerializeField] int healing;
-    [SerializeField] float healingTime; // If this is 0, it will be used instantly
+    public int healing;
+    public float healingTime; // If this is 0, it will be used instantly
 
 }

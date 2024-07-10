@@ -9,12 +9,6 @@ public enum ammos{
     heavy = 4
 }
 
-public enum weaponType{
-    gun,
-    melee
-}
-
-
 [CreateAssetMenu(fileName = "Default Gun", menuName = "Weapons/Create/Create Gun", order = 1)]
 public class Gun : Weapon
 {
