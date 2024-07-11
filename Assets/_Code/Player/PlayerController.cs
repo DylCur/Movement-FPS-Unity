@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     {
 
         float moveSpeed = Input.GetKeyDown(KeyCode.LeftShift) ? sprintSpeed: walkSpeed;
-        Debug.Log(moveSpeed);
+        // Debug.Log(moveSpeed);
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");

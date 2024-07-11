@@ -2,30 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ammos{
-    any = 0,
-    light = 1,
-    shotgun = 2,
-    heavy = 4
-}
 
-
-public class Gun : Weapon
+[CreateAssetMenu(fileName = "Gun", menuName = "Items/Gun", order = 0)]
+public class Gun : Item
 {
-    
-    [Header("Gun Parameters")]
+    public float range;
+    public int damage;
+    public bool canShoot;
 
-    public bool burst;
-    public ushort shotsPerBurst;
-    public ammos ammoType;
-    
-    void Awake() {
-        weaponName = "Default Gun";    
-        description = "Default Gun Description";
-        ammoType = ammos.any;
+    void Awake(){
+        range = Mathf.Infinity;
         damage = 10;
-        burst = false;
+        canShoot = true;
     }
-
-    
 }
