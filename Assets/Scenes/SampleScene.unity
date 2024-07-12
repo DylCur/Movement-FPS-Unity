@@ -720,8 +720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab807849ad6468438ef31523f5edb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
-  sprintSpeed: 16
+  walkSpeed: 20
+  sprintSpeed: 32
   mouseSensitivity: 2
   moveVelocity: {x: 0, y: 0, z: 0}
   dashCD: 1

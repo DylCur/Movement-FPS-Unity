@@ -118,7 +118,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
+        // if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0){
+            HandleInput();
+        // }
+
         HandleMouseLook();
         if(shouldDash){
             StartCoroutine(Dash());
@@ -131,8 +134,8 @@ public class PlayerController : MonoBehaviour
         float moveSpeed = Input.GetKeyDown(KeyCode.LeftShift) ? sprintSpeed: walkSpeed;
         // Debug.Log(moveSpeed);
 
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
         moveVelocity = moveDirection.normalized;
