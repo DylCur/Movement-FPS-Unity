@@ -8,11 +8,10 @@ public class Gun : Item
 {
     public float range;
     public int damage;
-    public bool canShoot;
+    public float shotCD;
 
     void Awake(){
         range = Mathf.Infinity;
         damage = 10;
-        canShoot = true;
     }
 }

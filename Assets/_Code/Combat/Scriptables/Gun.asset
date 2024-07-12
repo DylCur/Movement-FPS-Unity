@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e15280c2456bfb42a3d1e2e8d150a27, type: 3}
   m_Name: Gun
   m_EditorClassIdentifier: 
-  range: 100
+  canUse: 1
+  holsterTime: 0
+  range: Infinity
   damage: 10
-  canShoot: 1
+  shotCD: 3
