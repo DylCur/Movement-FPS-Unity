@@ -723,6 +723,12 @@ MonoBehaviour:
   walkSpeed: 10
   sprintSpeed: 16
   mouseSensitivity: 2
+  moveVelocity: {x: 0, y: 0, z: 0}
+  dashCD: 1
+  dashForce: 10
+  canDash: 1
+  dashKey: 304
+  dashVelocity: {x: 0, y: 0, z: 0}
 --- !u!54 &889927282
 Rigidbody:
   m_ObjectHideFlags: 0
