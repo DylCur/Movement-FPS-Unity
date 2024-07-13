@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 10f;
     public float sprintSpeed = 16f;
     public float mouseSensitivity = 2f;
+    [SerializeField] float damping = 0.9f;
     
     [Space(10)]
     [SerializeField] Vector3 moveVelocity;
@@ -133,6 +134,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void FixedUpdate(){
+        ApplyForce();
+    }
+
+    void ApplyForce(){
+        // Apply the input force to the rigidbody's velocity
+        rb.velocity += moveVelocity;
+
+        // Ensure the input force doesn't affect the rigidbody's natural velocity decay
+        rb.velocity = new Vector3(rb.velocity.x * (1 - Time.deltaTime), rb.velocity.y, rb.velocity.z * (1 - Time.deltaTime));
+    
+    }
+
     
     IEnumerator Slow(Vector3 reduction, float time){
         
@@ -151,6 +165,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity += new Vector3(0, rb.velocity.y - chunk.y + Mathf.Abs(rb.velocity.y - chunk.y), 0);
             }
             
+
             if(rb.velocity.z - chunk.z < 0){
                 rb.velocity += new Vector3(0, 0, rb.velocity.z - chunk.z + Mathf.Abs(rb.velocity.z - chunk.z));
             }
@@ -185,8 +200,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(time);
 
         }
-
-
         
     }
 
@@ -199,17 +212,23 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
-        Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
-        moveVelocity = moveDirection.normalized * moveSpeed;
+        Vector3 moveDirection = (transform.right * moveX + transform.forward * moveZ) * walkSpeed;
+        moveVelocity = moveDirection.normalized;
+
+        moveVelocity *= damping;
+
+        
+
 
         // Apply movement to the Rigidbody
-        rb.velocity += new Vector3(moveVelocity.x, 0, moveVelocity.z);
-        StartCoroutine(Slow(new Vector3(moveVelocity.x, 0, moveVelocity.z), 0.0001f));
+        // rb.AddForce(new Vector3(moveVelocity.x, 0, moveVelocity.z));
+        // rb.velocity += new Vector3(moveVelocity.x, 0, moveVelocity.z);
+        // StartCoroutine(Slow(new Vector3(moveVelocity.x, 0, moveVelocity.z), 0.00000001f));
 
         // Jumping (add your own conditions for jumping)
         if (Input.GetButtonDown("Jump") && isGrounded())
         {
-            rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
         }
     }
 
