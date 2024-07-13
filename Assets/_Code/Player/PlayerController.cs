@@ -1,13 +1,7 @@
 using System.Collections;
+using UnityEditor.Search;
 using UnityEngine;
 
-// Random thought but i should add a detonator to this game for directional changes
-
-
-/*
-TODO: Make it so movement is not set when walking but added to
-
-*/
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -33,7 +27,15 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     [SerializeField] Vector3 dashVelocity;
 
+    [Header("Jumping")]
+
+    [SerializeField] bool canJump = true;
+    [SerializeField] float jumpForce = 6f;
+    [SerializeField] KeyCode jumpKey = KeyCode.Space;
+    
+
     bool shouldDash => canDash && Input.GetKeyDown(dashKey);
+    bool shouldJump => isGrounded() && canJump && Input.GetKeyDown(jumpKey);
     
 
     // Other
@@ -119,14 +121,17 @@ public class PlayerController : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        
         canDash = true;
+        canJump = true;
     }
 
     void Update()
     {
-        // if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0){
-            HandleInput();
-        // }
+       
+        HandleInput();
+      
 
         HandleMouseLook();
         if(shouldDash){
@@ -217,18 +222,10 @@ public class PlayerController : MonoBehaviour
 
         moveVelocity *= damping;
 
-        
-
-
-        // Apply movement to the Rigidbody
-        // rb.AddForce(new Vector3(moveVelocity.x, 0, moveVelocity.z));
-        // rb.velocity += new Vector3(moveVelocity.x, 0, moveVelocity.z);
-        // StartCoroutine(Slow(new Vector3(moveVelocity.x, 0, moveVelocity.z), 0.00000001f));
-
         // Jumping (add your own conditions for jumping)
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if (shouldJump)
         {
-            rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 
