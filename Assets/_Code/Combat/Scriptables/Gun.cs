@@ -9,9 +9,12 @@ public class Gun : Item
     public float range;
     public int damage;
     public float shotCD;
+    public float recoil;
+
 
     void Awake(){
         range = Mathf.Infinity;
         damage = 10;
+        recoil = 0;
     }
 }

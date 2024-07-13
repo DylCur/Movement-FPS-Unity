@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Collections.Specialized;
 
 public class GunController : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class GunController : MonoBehaviour
     
     [SerializeField] TMP_Text statusText;
 
+    Rigidbody rb;
+
     public int health = 100;
 
 
@@ -28,18 +31,33 @@ public class GunController : MonoBehaviour
     }
 
 
+    void ApplyRecoil(Gun gun){
+        /*
+            I need to make it so that when you shoot based on the camera rotation
+
+        
+        */
+    
+        Vector3 rotation = Camera.main.transform.forward;
+        rb.velocity += -rotation * gun.recoil;
+        
+    }
+
     IEnumerator ShootGun(Gun gun){
         
         gun.canUse = false;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-        if(Physics.Raycast(ray, out RaycastHit hit, gun.range)){
+        if(Physics.Raycast(ray, out hit, gun.range)){
             Debug.Log($"You hit {hit.transform.name}");
+            ApplyRecoil(gun);
         }
 
         else{
             Debug.Log("You missed!");
         }
+
 
         
         UText($"Shoot Cooldown for {gun.name}");
@@ -108,6 +126,8 @@ public class GunController : MonoBehaviour
         
         UText($"Currently Using {one.name}");
         currentItem = one;
+
+        rb = GetComponent<Rigidbody>();
     }
 
 

@@ -16,4 +16,5 @@ MonoBehaviour:
   holsterTime: 0
   range: Infinity
   damage: 10
-  shotCD: 3
+  shotCD: 0.1
+  recoil: 15
