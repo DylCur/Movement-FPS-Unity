@@ -4,6 +4,11 @@ using UnityEngine;
 // Random thought but i should add a detonator to this game for directional changes
 
 
+/*
+TODO: Make it so movement is not set when walking but added to
+
+*/
+
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
@@ -128,6 +133,63 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+    IEnumerator Slow(Vector3 reduction, float time){
+        
+        int reductionNum = 10;                              // The number of reductions until the velocity reaches 0
+        Vector3 chunk = reduction/reductionNum;             // Idk what to call this variable, if you can think of a better name use it PLEASE
+
+        for(int i = 0; i < reductionNum; i++){
+
+            rb.velocity -= chunk;
+
+            if(rb.velocity.x - chunk.x < 0){
+                rb.velocity += new Vector3(rb.velocity.x - chunk.x + Mathf.Abs(rb.velocity.x - chunk.x), 0, 0);
+            }
+
+            if(rb.velocity.y - chunk.y < 0){
+                rb.velocity += new Vector3(0, rb.velocity.y - chunk.y + Mathf.Abs(rb.velocity.y - chunk.y), 0);
+            }
+            
+            if(rb.velocity.z - chunk.z < 0){
+                rb.velocity += new Vector3(0, 0, rb.velocity.z - chunk.z + Mathf.Abs(rb.velocity.z - chunk.z));
+            }
+            /*
+                ? I need to find how to make it so i remove just enough velocity so that rb.velocity go to 0
+
+                0 - x + c
+
+                10 - 11
+                0 - 10 + 11 = 1
+                
+                x - c + (0-x+c) = 0
+                x - c + 0 -x + c = 0
+                
+                100 - 101 = -1
+                |-1| = 1
+
+                x-c + |x-c|
+
+                100 - 101 + |100 - 101|
+                -1 + 1 = 0
+                12 - 15 = -3
+                -3 + 3 = 0
+
+                YESSSSS I FOUND IT
+                   
+                
+            
+            */
+            
+
+            yield return new WaitForSeconds(time);
+
+        }
+
+
+        
+    }
+
     void HandleInput()
     {
 
@@ -138,10 +200,11 @@ public class PlayerController : MonoBehaviour
         float moveZ = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
-        moveVelocity = moveDirection.normalized;
+        moveVelocity = moveDirection.normalized * moveSpeed;
 
         // Apply movement to the Rigidbody
-        rb.velocity = new Vector3(moveVelocity.x * moveSpeed + dashVelocity.x, rb.velocity.y, moveVelocity.z * moveSpeed);
+        rb.velocity += new Vector3(moveVelocity.x, 0, moveVelocity.z);
+        StartCoroutine(Slow(new Vector3(moveVelocity.x, 0, moveVelocity.z), 0.0001f));
 
         // Jumping (add your own conditions for jumping)
         if (Input.GetButtonDown("Jump") && isGrounded())
