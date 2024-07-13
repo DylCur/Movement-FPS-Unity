@@ -32,11 +32,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool canJump = true;
     [SerializeField] float jumpForce = 6f;
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
+
+    [Header("Slamming")]
+
+    [SerializeField] float slamForce = 30f;
+    [SerializeField] bool canSlam;
+    [SerializeField] KeyCode slamKey = KeyCode.LeftControl;
     
 
     bool shouldDash => canDash && Input.GetKeyDown(dashKey);
     bool shouldJump => isGrounded() && canJump && Input.GetKeyDown(jumpKey);
-    
+    bool shouldSlam => !isGrounded() && canSlam && Input.GetKeyDown(slamKey);
 
     // Other
 
@@ -125,6 +131,7 @@ public class PlayerController : MonoBehaviour
         
         canDash = true;
         canJump = true;
+        canSlam = true;
     }
 
     void Update()
@@ -136,6 +143,14 @@ public class PlayerController : MonoBehaviour
         HandleMouseLook();
         if(shouldDash){
             StartCoroutine(Dash());
+        }
+
+        if(shouldSlam){
+            Slam();
+        }
+
+        if(isGrounded()){
+            canSlam = true;
         }
     }
 
@@ -227,6 +242,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+    }
+
+    void Slam(){
+        rb.velocity += new Vector3(0, -slamForce, 0);
+        canSlam = false;
     }
 
 

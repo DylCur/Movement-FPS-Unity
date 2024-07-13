@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Specialized;
 
+
 public class GunController : MonoBehaviour
 {
     [Header("Hotbar")]
@@ -31,7 +32,7 @@ public class GunController : MonoBehaviour
     }
 
 
-    void ApplyRecoil(Gun gun){
+    void ApplyRecoil(Gun gun, RaycastHit hit){
         /*
             I need to make it so that when you shoot based on the camera rotation
 
@@ -39,7 +40,7 @@ public class GunController : MonoBehaviour
         */
     
         Vector3 rotation = Camera.main.transform.forward;
-        rb.velocity += -rotation * gun.recoil;
+        rb.velocity += -rotation * gun.recoil / Mathf.CeilToInt(Mathf.Sqrt(hit.distance / 10));
         
     }
 
@@ -51,7 +52,7 @@ public class GunController : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, gun.range)){
             Debug.Log($"You hit {hit.transform.name}");
-            ApplyRecoil(gun);
+            ApplyRecoil(gun, hit);
         }
 
         else{
